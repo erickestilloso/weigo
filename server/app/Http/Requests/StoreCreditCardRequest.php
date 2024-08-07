@@ -23,14 +23,9 @@ class StoreCreditCardRequest extends FormRequest
     {
         return [
             'amount' => [ 'required', 'min:1', 'string'],
-            'txnid' => [ 'required', 'max:40', 'string' ],
             'ccy' => [ 'required', 'max:5', 'string' ],
             'description' => [ 'required','max:255', 'string'],
             'email' => [ 'required', 'max:255', 'email' ],
-            'merchantId' => [ 'required', 'max:255', 'string' ],
-            'password' => [ 'required','max:255', 'string'],
-            'param2' => [ 'required', 'max:255', 'string' ],
-            'param1' => [ 'required', 'max:255', 'string' ],
             'firstName' => [ 'required', 'max:255', 'string'],
             'lastName' => [ 'required', 'max:255', 'string' ],
             'address1' => [ 'required', 'max:255', 'string'],

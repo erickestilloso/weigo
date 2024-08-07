@@ -18,14 +18,9 @@ class ServiceModelResource extends JsonResource
         return [
             'id' => $this->id,
             'amount' => $this->amount,
-            'txnid' => $this->txnid,
             'ccy' => $this->ccy,
             'description' => $this->description,
             'email' => $this->email,
-            'merchantId' => $this->merchantId,
-            'password' => $this->password,
-            'param2' => $this->param2,
-            'param1' => $this->param1,
             'created_at' => $this->created_at
         ];
     }

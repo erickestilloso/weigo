@@ -13,15 +13,11 @@ return new class extends Migration
     {
         Schema::create('d_p_credit_cards', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uid');
             $table->string('amount');
-            $table->string('txnid');
             $table->string('ccy');
             $table->string('description')->nullable();
-            $table->string('email');
-            $table->string('merchantId');
-            $table->string('password');
-            $table->string('param2');
-            $table->string('param1');            
+            $table->string('email');           
             
             $table->string('firstName');
             $table->string('lastName');

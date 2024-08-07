@@ -3,7 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use Illuminate\Support\Str;
+use App\Models\CreditCard;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DPCreditCard>
  */
@@ -14,18 +15,15 @@ class DPCreditCardFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = CreditCard::class;
     public function definition(): array
     {
         return [
+            'uid' => $this->faker->uuid,
             'amount' => fake()->sentence(),
-            'txnid' => fake()->sentence(),
             'ccy' => fake()->sentence(),
             'description' => fake()->sentence(),
             'email' => fake()->sentence(),
-            'merchantId' => fake()->sentence(),
-            'password' => fake()->sentence(),
-            'param2' => fake()->sentence(),
-            'param1' => fake()->sentence(),
             'firstName' => fake()->sentence(),
             'lastName' => fake()->sentence(),
             'address1' => fake()->sentence(),

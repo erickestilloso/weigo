@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Faker\Factory as Faker;
 use Carbon\Carbon;
 use App\Models\User;
+use Illuminate\Support\Str;
 class DBAdminSeeder extends Seeder
 {
     /**
@@ -17,6 +18,7 @@ class DBAdminSeeder extends Seeder
     public function run(): void
     {
       User::factory()->create([
+            'uid' => Str::uuid(),
             'name' => 'Erick',
             'birthday' => '1990-01-01',
             'phone_number' => '1234567890',
@@ -24,6 +26,46 @@ class DBAdminSeeder extends Seeder
             'password' => bcrypt('password'),
             'email_verified_at' => time(),
             'role' => 'superadministrator'
+        ]); 
+      User::factory()->create([
+            'uid' => Str::uuid(),
+            'name' => 'Erick',
+            'birthday' => '1990-01-01',
+            'phone_number' => '1234567890',
+            'email' => 'administrator@gmail.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => time(),
+            'role' => 'administrator'
+        ]); 
+      User::factory()->create([
+            'uid' => Str::uuid(),
+            'name' => 'Erick',
+            'birthday' => '1990-01-01',
+            'phone_number' => '1234567890',
+            'email' => 'maintenance@gmail.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => time(),
+            'role' => 'maintenance'
+        ]); 
+      User::factory()->create([
+            'uid' => Str::uuid(),
+            'name' => 'Erick',
+            'birthday' => '1990-01-01',
+            'phone_number' => '1234567890',
+            'email' => 'sales@gmail.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => time(),
+            'role' => 'sales'
+        ]); 
+      User::factory()->create([
+            'uid' => Str::uuid(),
+            'name' => 'Erick',
+            'birthday' => '1990-01-01',
+            'phone_number' => '1234567890',
+            'email' => 'common@gmail.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => time(),
+            'role' => 'maintenance'
         ]); 
     }
 }

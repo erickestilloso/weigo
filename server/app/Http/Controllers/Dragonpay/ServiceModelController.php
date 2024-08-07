@@ -26,10 +26,22 @@ class ServiceModelController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(StoreServiceModelRequest $request)
     {
         //
-        
+        $serviceModel = ServiceModel::create($request->validated());
+        $status = 'success';
+        $code = 200;
+        if (!$serviceModel) {
+            $status = 'error';
+            $code = 500;
+        }
+        return response()->json([
+            'message' => 'Service Model Information Transaction is Successful',
+            'status' => $status,
+            'code' => $code
+        ], 200);
+
     }
 
     /**
@@ -39,17 +51,7 @@ class ServiceModelController extends Controller
     {
         //
     $serviceModel = ServiceModel::create($request->validated());
-    $status = 'success';
-    $code = 200;
-    if (!$serviceModel) {
-        $status = 'error';
-        $code = 500;
-    }
-    return response()->json([
-        'message' => 'Service Model Information Added Successfully',
-        'status' => $status,
-        'code' => $code
-    ], 200);
+    return back()->with('success', 'Item deleted successfully');
     }
 
     /**
@@ -79,8 +81,13 @@ class ServiceModelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ServiceModel $serviceModel)
+    public function destroy($id)
     {
-        //
+        DB::table('d_p_service_models')->where('uid', $id)->delete();
+        if (DB::table('d_p_service_models')->where('uid', $id)->exists()) {
+            return back()->with('error', 'Item not deleted');
+        }
+        
+        return back()->with('success', 'Item deleted successfully');
     }
 }

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCreditCardRequest;
 use App\Http\Requests\UpdateCreditCardRequest;
 use App\Models\CreditCard;
-
 use Inertia\Inertia;
 use App\Http\Resources\CreditCardResource;
 use Illuminate\Support\Facades\DB;
@@ -27,9 +26,21 @@ class CreditCardController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(StoreCreditCardRequest $request)
     {
         //
+        $creditCard = CreditCard::create($request->validated());
+        $status = 'success';
+        $code = 200;
+        if (!$creditCard) {
+            $status = 'error';
+            $code = 500;
+        }
+        return response()->json([
+            'message' => 'Credit Card Transaction is Successful',
+            'status' => $status,
+            'code' => $code
+        ], 200);
     }
 
     /**
@@ -37,19 +48,9 @@ class CreditCardController extends Controller
      */
     public function store(StoreCreditCardRequest $request)
     {
-     
+
     $creditCard = CreditCard::create($request->validated());
-    $status = 'success';
-    $code = 200;
-    if (!$creditCard) {
-        $status = 'error';
-        $code = 500;
-    }
-    return response()->json([
-        'message' => 'Credit Card Information Added Successfully',
-        'status' => $status,
-        'code' => $code
-    ], 200);
+    return back()->with('success', 'Item deleted successfully');
     }
 
     /**
@@ -79,8 +80,13 @@ class CreditCardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CreditCard $creditCard)
+    public function destroy($id)
     {
-        //
+        DB::table('d_p_credit_cards')->where('uid', $id)->delete();
+        if (DB::table('d_p_credit_cards')->where('uid', $id)->exists()) {
+            return back()->with('error', 'Item not deleted');
+        }
+        
+        return back()->with('success', 'Item deleted successfully');
     }
 }

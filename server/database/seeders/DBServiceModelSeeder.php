@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Faker\Factory as Faker;
 use Carbon\Carbon;
-
+use Illuminate\Support\Str;
 class DBServiceModelSeeder extends Seeder
 {
     /**
@@ -17,17 +17,13 @@ class DBServiceModelSeeder extends Seeder
     public function run(): void
     {
          $faker = Faker::create();
-        foreach (range(1, 30) as $index) {
+        foreach (range(1, 5) as $index) {
             DB::table('d_p_service_models')->insert([
+                'uid' => Str::uuid(),
                 'amount' => $faker->word(),
-                'txnid' => $faker->word(),
                 'ccy' => $faker->word(),
                 'description' => $faker->sentence(),
                 'email' => $faker->unique()->safeEmail(),
-                'merchantId' => $faker->word(),
-                'password' => $faker->md5,
-                'param2' => $faker->word(),
-                'param1' => $faker->word(),
                 'created_at' => Carbon::instance($faker->dateTimeBetween('now')),
                 'updated_at' => Carbon::instance($faker->dateTimeBetween('now','+1 months'))
                 

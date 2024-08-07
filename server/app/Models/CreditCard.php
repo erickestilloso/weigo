@@ -12,15 +12,11 @@ class CreditCard extends Model
     protected $table = 'd_p_credit_cards';
 
     protected $fillable = [
+            'uid',
             'amount',
-            'txnid' ,
             'ccy',
             'description',
             'email',
-            'merchantId',
-            'password',
-            'param2',
-            'param1',
             'firstName',
             'lastName',
             'address1',
@@ -32,4 +28,14 @@ class CreditCard extends Model
             'telNo',
            
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            if (empty($model->uid)) {
+                $model->uid = (string) \Str::uuid(); // or any other UID generation logic
+            }
+        });
+    }
 }

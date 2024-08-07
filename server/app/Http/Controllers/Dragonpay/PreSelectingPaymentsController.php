@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateDPPreSelectingPaymentsRequest;
 use App\Models\DPPreSelectingPayments;
 use App\Http\Resources\DPPreSelectingPaymentsResource;
 use Inertia\Inertia;
+use Illuminate\Http\JsonResponse; 
 use Illuminate\Support\Facades\DB;
 class PreSelectingPaymentsController extends Controller
 {
@@ -25,16 +26,9 @@ class PreSelectingPaymentsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(StoreDPPreSelectingPaymentsRequest $request)
     {
         //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreDPPreSelectingPaymentsRequest $request)
-    {
         $preSelectingPayments = DPPreSelectingPayments::create($request->validated());
         $status = 'success';
         $code = 200;
@@ -43,10 +37,21 @@ class PreSelectingPaymentsController extends Controller
             $code = 500;
         }
         return response()->json([
-            'message' => 'Pre-Selecting Information Added Successfully',
+            'message' => 'Pre-Selecting Information Transaction is Successful',
             'status' => $status,
             'code' => $code
         ], 200);
+        
+        
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreDPPreSelectingPaymentsRequest $request)
+    {
+        $preSelectingPayments = DPPreSelectingPayments::create($request->validated());
+        return back()->with('success', 'Item deleted successfully');
     }
 
     /**
@@ -76,8 +81,13 @@ class PreSelectingPaymentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DPPreSelectingPayments $dPPreSelectingPayments)
+    public function destroy($id)
     {
-        //
+        DB::table('d_p_pre_selecting_payments')->where('uid', $id)->delete();
+        if (DB::table('d_p_pre_selecting_payments')->where('uid', $id)->exists()) {
+            return back()->with('error', 'Item not deleted');
+        }
+        
+        return back()->with('success', 'Item deleted successfully');
     }
 }

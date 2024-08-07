@@ -25,15 +25,7 @@ class FilteredPaymentsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreDPFilteredPaymentsRequest $request)
+    public function create(StoreDPFilteredPaymentsRequest $request)
     {
         //
         $filteredPayments = DPFilteredPayments::create($request->validated());
@@ -44,10 +36,20 @@ class FilteredPaymentsController extends Controller
             $code = 500;
         }
         return response()->json([
-            'message' => 'Filtered Payments Information Added Successfully',
+            'message' => 'Filtered Payments Transaction is Successful',
             'status' => $status,
             'code' => $code
         ], 200);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreDPFilteredPaymentsRequest $request)
+    {
+        //
+        $filteredPayments = DPFilteredPayments::create($request->validated());
+        return back()->with('success', 'Item deleted successfully');
     }
 
     /**
@@ -77,8 +79,13 @@ class FilteredPaymentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DPFilteredPayments $dPFilteredPayments)
+    public function destroy($id)
     {
-        //
+        DB::table('d_p_filtered_payments')->where('uid', $id)->delete();
+        if (DB::table('d_p_filtered_payments')->where('uid', $id)->exists()) {
+            return back()->with('error', 'Item not deleted');
+        }
+        
+        return back()->with('success', 'Item deleted successfully');
     }
 }

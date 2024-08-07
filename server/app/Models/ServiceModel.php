@@ -11,14 +11,20 @@ class ServiceModel extends Model
     protected $table = 'd_p_service_models';
 
     protected $fillable = [
+            'uid',
             'amount',
-            'txnid' ,
             'ccy',
             'description',
             'email',
-            'merchantId',
-            'password',
-            'param2',
-            'param1',
+            
     ];
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            if (empty($model->uid)) {
+                $model->uid = (string) \Str::uuid(); // or any other UID generation logic
+            }
+        });
+    }
 }

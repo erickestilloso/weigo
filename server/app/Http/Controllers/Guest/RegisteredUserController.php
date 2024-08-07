@@ -15,6 +15,7 @@ use Inertia\Response;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WeigoEmail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 class RegisteredUserController extends Controller
 {
     /**
@@ -36,9 +37,9 @@ class RegisteredUserController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.Guest::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],            
         ]);
-
+        
         $guest = Guest::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -53,7 +54,17 @@ class RegisteredUserController extends Controller
         Mail::to($guest->email)->send(new WeigoEmail($guest));
 
         // event(new Registered($guest));
-        return response()->json(['message' => 'Registration is Successfully'], 200);
+    
+        if ($guest) {
+            return response()->json(['message' => 'Registration is Successfully'], 200);
+            
+        } else {
+            return response()->json([
+                'message' => 'Unsuccessful Registration',
+                'code' => 500,             
+            ], 500);
+        }
+        
 
     }
 }

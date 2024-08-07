@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('weigos', function (Blueprint $table) {
+        Schema::create('d_p_weigo_settings', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uid');
+            $table->string('txnid');
+            $table->string('merchant_id');
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('weigos');
+        Schema::dropIfExists('d_p_weigo_settings');
     }
 };

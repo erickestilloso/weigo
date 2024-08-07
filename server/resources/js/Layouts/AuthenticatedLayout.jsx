@@ -3,7 +3,7 @@ import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { useAccounts } from "@/hooks/data/useAccounts";
-export default function Authenticated({ user, header, children, role }) {
+export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
     const [isRole, setIsRole] = useState(false);
@@ -31,12 +31,12 @@ export default function Authenticated({ user, header, children, role }) {
                             </div> */}
 
                             <div className="hidden space-x-8 sm:-my-px sm:flex">
-                                <NavLink
+                                {/* <NavLink
                                     href={route("dashboard")}
                                     active={route().current("dashboard")}
                                 >
                                     Dashboard
-                                </NavLink>
+                                </NavLink> */}
                                 <NavLink
                                     href={route("payments")}
                                     active={route().current("payments")}
@@ -73,12 +73,22 @@ export default function Authenticated({ user, header, children, role }) {
                                     Pre Selecting Payment
                                 </NavLink>
                                 {isRole ? (
-                                    <NavLink
-                                        href={route("accounts")}
-                                        active={route().current("accounts")}
-                                    >
-                                        Accounts
-                                    </NavLink>
+                                    <>
+                                        <NavLink
+                                            href={route("accounts")}
+                                            active={route().current("accounts")}
+                                        >
+                                            Accounts
+                                        </NavLink>
+                                        <NavLink
+                                            href={route("dpsettings")}
+                                            active={route().current(
+                                                "dpsettings"
+                                            )}
+                                        >
+                                            Weigo Settings (DP)
+                                        </NavLink>
+                                    </>
                                 ) : (
                                     <></>
                                 )}

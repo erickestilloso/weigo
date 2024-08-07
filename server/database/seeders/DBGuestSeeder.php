@@ -28,5 +28,27 @@ class DBGuestSeeder extends Seeder
             'email_verified_at' => time(),
             'verification_token' => sha1(Faker::create()->unique()->randomNumber()),
         ]); 
+        Guest::factory()->create([
+            'uid' => Str::uuid(),
+            'first_name' => 'Erick',
+            'last_name' => 'Estilloso',
+            'birthday' => '1990-01-01',
+            'phone_number' => '1234567890',
+            'email' => 'guest@gmail.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => time(),
+            'verification_token' => sha1(Faker::create()->unique()->randomNumber()),
+        ]); 
+        Guest::factory()->create([
+            'uid' => Str::uuid(),
+            'first_name' => 'Erick',
+            'last_name' => 'Estilloso',
+            'birthday' => '1990-01-01',
+            'phone_number' => '123456789',
+            'email' => 'guest2@gmail.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => time(),
+            'verification_token' => sha1(Faker::create()->unique()->randomNumber()),
+        ]); 
     }
 }
